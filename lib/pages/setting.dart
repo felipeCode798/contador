@@ -49,6 +49,7 @@ class _SettingState extends State<Setting> {
                     decoration: InputDecoration(
                       hintText: "1,2,3... ",
                       hintStyle: TextStyle(
+                        fontFamily: 'poppins',
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                         color: Colors.grey,
@@ -72,6 +73,7 @@ class _SettingState extends State<Setting> {
                           Colors.blueAccent.shade400.withOpacity(0.5)),
                   child: Text('Mostrar',
                       style: TextStyle(
+                          fontFamily: 'poppins',
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                           color: Colors.white)),

@@ -83,6 +83,7 @@ class _ContadorState extends State<Contador> {
                 Text(
                   "Cambiar el fondo",
                   style: TextStyle(
+                      fontFamily: 'poppins',
                       fontSize: 30,
                       fontWeight: FontWeight.w400,
                       color: Colors.white),
@@ -133,6 +134,7 @@ class _ContadorState extends State<Contador> {
                 ),
                 Text('$_counter',
                     style: TextStyle(
+                        fontFamily: 'poppins',
                         fontSize: 150,
                         fontWeight: FontWeight.bold,
                         color: Colors.white)),
@@ -156,6 +158,7 @@ class _ContadorState extends State<Contador> {
                           padding: const EdgeInsets.all(40)),
                       child: Text('Limpiar',
                           style: TextStyle(
+                              fontFamily: 'poppins',
                               fontSize: 20,
                               fontWeight: FontWeight.w400,
                               color: Colors.white)),
