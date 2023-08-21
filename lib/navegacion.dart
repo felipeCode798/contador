@@ -1,52 +1,75 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:contador/pages/contador.dart';
 import 'package:contador/pages/setting.dart';
 
 class Navegacion extends StatefulWidget {
-  const Navegacion({super.key});
+  final int counterValue;
+
+  const Navegacion({Key? key, this.counterValue = 0}) : super(key: key);
 
   @override
   State<Navegacion> createState() => _Navegacion();
 }
 
 class _Navegacion extends State<Navegacion> {
-  final items = const [
-    Icon(Icons.access_time, size: 30, color: Colors.white),
-    Icon(Icons.settings, size: 30, color: Colors.white),
+  int index = 0;
+
+  final List<Widget> list = [
+    Contador(),
+    Setting(),
   ];
 
-  int index = 0;
+  final PageController _pageController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+    list[0] = Contador(counterValue: widget.counterValue);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Colors.blue,
-          color: Colors.blueAccent.shade400.withOpacity(0.5),
-          animationDuration: const Duration(milliseconds: 200),
-          items: items,
-          index: index,
-          height: 60,
-          onTap: (selectedIndex) {
-            setState(() {
-              index = selectedIndex;
-            });
-          }),
-      body: Container(
-        child: getSelectedWidget(index: index),
+      body: Stack(
+        children: [
+          PageView(
+            controller: _pageController,
+            onPageChanged: (int index) {
+              setState(() => this.index = index);
+            },
+            children: list,
+          ),
+          Positioned(
+            bottom: 16,
+            left: 16,
+            right: 16,
+            child: Container(
+              child: BottomNavigationBar(
+                backgroundColor:
+                    Colors.transparent, // Color de fondo transparente
+                elevation: 0, // Sin sombra
+                selectedItemColor: Colors.white,
+                unselectedItemColor: Colors.white,
+                currentIndex: index,
+                onTap: (int index) {
+                  _pageController.jumpToPage(index);
+                  setState(() => this.index = index);
+                },
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.access_time),
+                    label: 'Contador',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.settings),
+                    label: 'Setting',
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
-  }
-}
-
-Widget getSelectedWidget({required int index}) {
-  switch (index) {
-    case 0:
-      return const Contador();
-    case 1:
-      return const Setting();
-    default:
-      return const Contador();
   }
 }

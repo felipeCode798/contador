@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:contador/navegacion.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
@@ -9,6 +10,10 @@ class Setting extends StatefulWidget {
 
 class _SettingState extends State<Setting> {
   String _image = "assets/images/fondopantalla.jpeg";
+  int _counter = 0; // Variable para almacenar el contador
+  final TextEditingController _controller =
+      TextEditingController(); // Controlador del TextField
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,20 +40,26 @@ class _SettingState extends State<Setting> {
                   width: 350,
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.white, // Fondo blanco
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(10)), // Bordes redondeados
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                     border: Border.all(color: Colors.grey),
-                    // Borde gris
                   ),
-                  child: Text(
-                    "1,2,3... ",
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: "1,2,3... ",
+                      hintStyle: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey,
+                      ),
+                    ),
                     textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
-                      color: Colors
-                          .grey, // Cambiado a negro para mejor visibilidad en fondo blanco
+                      color: Colors.grey,
                     ),
                   ),
                 ),
@@ -64,7 +75,24 @@ class _SettingState extends State<Setting> {
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                           color: Colors.white)),
-                  onPressed: () {},
+                  onPressed: () {
+                    try {
+                      _counter = int.parse(_controller.text);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Navegacion(counterValue: _counter),
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content:
+                                Text('Por favor, ingresa un número válido.')),
+                      );
+                    }
+                  },
                 ),
               ],
             ),

@@ -1,8 +1,14 @@
 import 'package:contador/pages/setting.dart';
 import 'package:flutter/material.dart';
+import 'package:contador/navegacion.dart';
 
 class Contador extends StatefulWidget {
-  const Contador({Key? key}) : super(key: key);
+  final int counterValue;
+
+  const Contador({Key? key, this.counterValue = 0})
+      : super(
+            key:
+                key); // Haz que counterValue sea opcional y tenga un valor predeterminado
 
   @override
   _ContadorState createState() => _ContadorState();
@@ -11,6 +17,11 @@ class Contador extends StatefulWidget {
 class _ContadorState extends State<Contador> {
   int _counter = 0;
   int confi = 0;
+  @override
+  void initState() {
+    super.initState();
+    confi = widget.counterValue; // Asignar el valor aquí
+  }
 
   //cambiar fondo
   String _image = "assets/images/fondopantalla.jpeg";
@@ -60,7 +71,7 @@ class _ContadorState extends State<Contador> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(_image), // Ruta de tu imagen de fondo
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
         child: Center(
@@ -105,12 +116,8 @@ class _ContadorState extends State<Contador> {
                     ElevatedButton(
                       onPressed: _changeBackgraud2,
                       child: ClipOval(
-                        child: Image.asset(
-                          "assets/images/fondopantalla2.jpg",
-                          width: 70,
-                          height: 70,
-                          fit: BoxFit.cover,
-                        ),
+                        child: Image.asset("assets/images/fondopantalla2.jpg",
+                            width: 70, height: 70, fit: BoxFit.cover),
                       ),
                       style: ElevatedButton.styleFrom(
                         shape: CircleBorder(),
