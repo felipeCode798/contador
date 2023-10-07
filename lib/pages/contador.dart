@@ -3,12 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:contador/navegacion.dart';
 
 class Contador extends StatefulWidget {
-  final int counterValue;
+  // final int counterValue;
+  final String image;
+  final int configuration;
+  final void Function(String background) onBackgroundChange;
 
-  const Contador({Key? key, this.counterValue = 0})
-      : super(
-            key:
-                key); // Haz que counterValue sea opcional y tenga un valor predeterminado
+  const Contador(
+      {Key? key,
+      required this.image,
+      required this.configuration,
+      required this.onBackgroundChange})
+      : super(key: key);
+// Haz que counterValue sea opcional y tenga un valor predeterminado
 
   @override
   _ContadorState createState() => _ContadorState();
@@ -16,44 +22,28 @@ class Contador extends StatefulWidget {
 
 class _ContadorState extends State<Contador> {
   int _counter = 0;
-  int confi = 0;
+
   @override
   void initState() {
-    super.initState();
-    confi = widget.counterValue; // Asignar el valor aquí
-  }
-
-  //cambiar fondo
-  String _image = "assets/images/fondopantalla.jpeg";
-
-  void _changeBackgraud1() {
-    setState(() {
-      _image = "assets/images/fondopantalla.jpeg";
-    });
-  }
-
-  void _changeBackgraud2() {
-    setState(() {
-      _image = "assets/images/fondopantalla2.jpg";
-    });
+    super.initState(); // Asignar el valor aquí
   }
 
   void _incrementCounter() {
     setState(() {
-      if (confi == 0) {
+      if (widget.configuration == 0) {
         _counter++;
       } else {
-        _counter = _counter + confi;
+        _counter = _counter + widget.configuration;
       }
     });
   }
 
   void _decrementCounter() {
     setState(() {
-      if (confi == 0) {
+      if (widget.configuration == 0) {
         _counter--;
       } else {
-        _counter = _counter - confi;
+        _counter = _counter - widget.configuration;
       }
     });
   }
@@ -70,7 +60,7 @@ class _ContadorState extends State<Contador> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(_image), // Ruta de tu imagen de fondo
+            image: AssetImage(widget.image), // Ruta de tu imagen de fondo
             fit: BoxFit.fill,
           ),
         ),
@@ -95,7 +85,8 @@ class _ContadorState extends State<Contador> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: _changeBackgraud1,
+                      onPressed: () => widget.onBackgroundChange(
+                          "assets/images/fondopantalla.jpeg"),
                       child: ClipOval(
                         child: Image.asset(
                           "assets/images/fondopantalla.jpeg",
@@ -115,7 +106,8 @@ class _ContadorState extends State<Contador> {
                       width: 20,
                     ),
                     ElevatedButton(
-                      onPressed: _changeBackgraud2,
+                      onPressed: () => widget.onBackgroundChange(
+                          "assets/images/fondopantalla2.jpg"),
                       child: ClipOval(
                         child: Image.asset("assets/images/fondopantalla2.jpg",
                             width: 70, height: 70, fit: BoxFit.cover),

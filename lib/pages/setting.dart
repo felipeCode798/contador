@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:contador/navegacion.dart';
 
 class Setting extends StatefulWidget {
+  //TODO PEDIR POR CONTRUCTOR EL IMAGE
+  //TODO CALLBACK CAMBIAR EL CONFIGURATION
+
   const Setting({Key? key}) : super(key: key);
 
   @override
@@ -80,13 +83,13 @@ class _SettingState extends State<Setting> {
                   onPressed: () {
                     try {
                       _counter = int.parse(_controller.text);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              Navegacion(counterValue: _counter),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         Navegacion(counterValue: _counter),
+                      //   ),
+                      // );
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

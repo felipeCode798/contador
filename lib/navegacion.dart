@@ -3,9 +3,7 @@ import 'package:contador/pages/contador.dart';
 import 'package:contador/pages/setting.dart';
 
 class Navegacion extends StatefulWidget {
-  final int counterValue;
-
-  const Navegacion({Key? key, this.counterValue = 0}) : super(key: key);
+  const Navegacion({Key? key}) : super(key: key);
 
   @override
   State<Navegacion> createState() => _Navegacion();
@@ -13,31 +11,27 @@ class Navegacion extends StatefulWidget {
 
 class _Navegacion extends State<Navegacion> {
   int index = 0;
-
-  final List<Widget> list = [
-    Contador(),
-    Setting(),
-  ];
+  int counterValue = 0;
+  String image = "assets/images/fondopantalla.jpeg";
 
   final PageController _pageController = PageController();
-
-  @override
-  void initState() {
-    super.initState();
-    list[0] = Contador(counterValue: widget.counterValue);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          PageView(
-            controller: _pageController,
-            onPageChanged: (int index) {
-              setState(() => this.index = index);
+          Builder(
+            builder: (context) {
+              if (index == 1) {
+                return Setting();
+              }
+              return Contador(
+                image: image,
+                configuration: counterValue,
+                onBackgroundChange: (background) {},
+              );
             },
-            children: list,
           ),
           Positioned(
             bottom: 16,
@@ -49,10 +43,11 @@ class _Navegacion extends State<Navegacion> {
                     Colors.transparent, // Color de fondo transparente
                 elevation: 0, // Sin sombra
                 selectedItemColor: Colors.white,
-                unselectedItemColor: Colors.white,
+                unselectedItemColor: Colors.white.withOpacity(0.5),
                 currentIndex: index,
                 onTap: (int index) {
-                  _pageController.jumpToPage(index);
+                  print(index);
+                  //_pageController.jumpToPage(index);
                   setState(() => this.index = index);
                 },
                 items: const [
